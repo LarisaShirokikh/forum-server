@@ -13,6 +13,7 @@ import { Photo } from './photo.entity';
 import { Like } from './like.entity';
 import { Story } from './story.entity';
 import { Purchase } from './purchase.entity';
+import { Post } from './post.entity';
 
 @Entity()
 export class Comment {
@@ -20,11 +21,11 @@ export class Comment {
   id: number;
 
   @Column()
-  content: string;
+  text: string;
 
   @ManyToOne(() => Photo, (photo) => photo.comment)
   @JoinColumn({ name: 'photoId' })
-  photo: Photo[];
+  photo?: Photo[];
 
   @OneToMany(() => Like, (like) => like.comment)
   likes: Like[];
@@ -36,6 +37,10 @@ export class Comment {
   @ManyToOne(() => Purchase, (purchase) => purchase.comments)
   @JoinColumn({ name: 'purchaseId' })
   purchase: Purchase;
+
+  @ManyToOne(() => Post, (post) => post.comments)
+  @JoinColumn({ name: 'postId' })
+  post: Post;
 
   @ManyToOne(() => User, (user) => user.comments)
   @JoinColumn({ name: 'userId' })

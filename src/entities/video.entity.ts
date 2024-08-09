@@ -18,6 +18,9 @@ export class Video {
   id: number;
 
   @Column()
+  filename: string;
+
+  @Column()
   url: string;
 
   @ManyToOne(() => Post, (post) => post.videos)
@@ -32,7 +35,7 @@ export class Video {
   @JoinColumn({ name: 'purchaseId' })
   purchase: Purchase;
 
-  @OneToMany(() => Like, (like) => like.video) // Один пост может иметь много лайков
+  @OneToMany(() => Like, (like) => like.video)
   likes: Like[];
 
   @CreateDateColumn()

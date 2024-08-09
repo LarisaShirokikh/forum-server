@@ -65,11 +65,20 @@ export class User {
   @Column({ default: 0 })
   karma?: number;
 
-  @Column('simple-array', { default: 'USER' })
-  roles: ('USER' | 'MODERATOR' | 'ADMIN' | 'SUPERADMIN' | 'ORGANIZATOR')[];
+  @Column('simple-array', { default: 'Пользователь' })
+  roles: (
+    | 'Пользователь'
+    | 'Модератор'
+    | 'Админ'
+    | 'Суперадмин'
+    | 'Организатор'
+  )[];
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @Column({ nullable: true })
+  lastSeen?: Date;
 
   @OneToMany(() => Review, (review) => review.user)
   reviews?: Review[];
@@ -104,7 +113,10 @@ export class User {
   @OneToMany(() => Comment, (comment) => comment.user)
   comments?: Comment[];
 
-  @OneToMany(() => ConfirmationCode, (confirmationCode) => confirmationCode.user )
+  @OneToMany(
+    () => ConfirmationCode,
+    (confirmationCode) => confirmationCode.user,
+  )
   confirmationCodes?: ConfirmationCode[];
 
   @OneToMany(() => Like, (like) => like.user)
